@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<!-- Vue.js -->
+   	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<!-- My CSS -->
+ 	<link rel="stylesheet" href="main.css">
+   	<title>Poor Man's Twitter</title>
+  </head>
+  <body>
+	<div v-cloak id="vue-app">
+		<div class ="jumbotron jumbotron-fluid bg-info text-white text-center">
+			<div class="container">
+				<h1 class="display-3">Poor Man's Twitter</h1>
+				<p class="lead">Using VUE and Django</p>
+			</div>
+		</div>
+		<div class="container">
+			<div v-if="showError" class="alert alert-danger alert-dismissible fade show" role="alert">
+				<strong>An error has occurred.</strong> Please check your internet connection.
+				<button v-on:click="resetError" type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="row justify-content-center mb-3">
+			    <div class="col-md-3 mb-3">
+			      <label class="sr-only" for="nameInput">Name</label>
+			      <input v-model="newTweet.name" type="text" class="form-control" placeholder="Name" id="nameInput">
+			    </div>
+			    <div class="col-md-7 mb-3">
+			      <label class="sr-only" for="messageInput">Message</label>
+			      <input v-model="newTweet.message" type="text" class="form-control" placeholder="What's happening?" maxlength="50" id="messageInput">
+			    </div>
+			    <div class="col-md-2">
+			      <button v-on:click="createTweet" type="button" class="btn btn-primary shadow-none">Tweet
+			      	<span v-if="loading" class="spinner-border spinner-border-sm" role="status"></span>
+			      </button>
+			    </div>
+	  		</div>
+		  	<table class="table">
+			  <thead>
+			    <tr>
+			      <th class="text-center">
+					  Time
+					  <button v-on:click="orderByTime(true)" type="button" class="btn btn-outline-primary btn-sm shadow-none ml-2">
+						  ASC
+					  </button>
+					  <button v-on:click="orderByTime(false)" type="button" class="btn btn-outline-primary btn-sm shadow-none ml-2">
+						  DES
+					  </button>
+			      </th>
+			      <th class="text-center">
+			      	Name
+			      	<button v-on:click="orderByName(true)" type="button" class="btn btn-outline-primary btn-sm shadow-none ml-2">
+			      	ASC
+			      	</button>
+			      	<button v-on:click="orderByName(false)" type="button" class="btn btn-outline-primary btn-sm shadow-none ml-2">
+			      	DES
+			      	</button>
+			      </th>
+			      <th class="text-center align-top"><div class="mb-1">Message</div></th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr class="text-center" v-for="tweet of tweets">
+			      <td class="align-middle">{{ createdToString(tweet) }}</td>
+			      <td class="align-middle">{{ tweet.name }}</td>
+			      <td style="word-wrap: break-word; max-width: 300px;">{{ tweet.message }}</td>
+			    </tr>
+			  </tbody>
+			</table>		
+		</div>
+	</div>
+    <!-- jQuery first, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- My JS -->
+	<script src="tweetService.js"></script>
+	<script src="app.js"></script>
+  </body>
+</html>
